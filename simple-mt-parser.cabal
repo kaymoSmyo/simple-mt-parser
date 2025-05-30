@@ -111,8 +111,11 @@ library
   exposed-modules:
     MTParser
     MTParser.Parser
+    MTParser.Source
     MTParser.Tools
-
+    MTParser.ByteStringAsSource
+    MTParser.TextAsSource
+    MTParser.StringAsSource
   -- Modules included in this library but not exported.
   -- other-modules:
 
