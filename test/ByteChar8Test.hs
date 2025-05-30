@@ -23,6 +23,7 @@ import Test.HUnit (
     (~:),
     (~?=),
  )
+import qualified Data.ByteString.Char8 as BS
 
 byteStringChar8ToolTest :: Test
 byteStringChar8ToolTest =
@@ -146,7 +147,7 @@ identTest =
         ~: TestList
             [ "parse single lower 'a'" ~: runParser ident (BS.pack "a") ~?= success "a" (BS.pack "")
             , "parse lower then alphanum 'a1'" ~: runParser ident (BS.pack "a1") ~?= success "a1" (BS.pack "")
-            , "parse multiple lower then multiple alphanum 'abc123xyz'" ~: runParser ident "abc123xyz" ~?= success "abc123xyz" (BS.pack "")
+            , "parse multiple lower then multiple alphanum 'abc123xyz'" ~: runParser ident (BS.pack "abc123xyz") ~?= success "abc123xyz" (BS.pack "")
             , "parse only 'lower' case" ~: runParser ident (BS.pack "lower") ~?= success "lower" (BS.pack "")
             , "stop at non-alphanum 'ident-'" ~: runParser ident (BS.pack "ident-") ~?= success "ident" (BS.pack "-")
             , "parse 'aBc' as 'aBc'" ~: runParser ident (BS.pack "aBc") ~?= success "aBc" (BS.pack "")
