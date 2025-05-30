@@ -11,56 +11,57 @@ import Data.Char (
     isUpper,
  )
 import MTParser.Parser (ParseError (Err), Parser, item)
+import MTParser.Source qualified as S
 
-sat :: (Char -> Bool) -> Parser Char
+sat :: S.IsSource s => (Char -> Bool) -> Parser s Char
 sat p = do
     x <- item
     if p x
         then pure x
         else throwError . Err $ "not predicate at " ++ [x]
 
-digit :: Parser Char
+digit :: S.IsSource s => Parser s Char
 digit = sat isDigit
 
-lower :: Parser Char
+lower :: S.IsSource s => Parser s Char
 lower = sat isLower
 
-upper :: Parser Char
+upper :: S.IsSource s => Parser s Char
 upper = sat isUpper
 
-letter :: Parser Char
+letter :: S.IsSource s => Parser s Char
 letter = sat isAlpha
 
-alphanum :: Parser Char
+alphanum :: S.IsSource s => Parser s Char
 alphanum = sat isAlphaNum
 
-char :: Char -> Parser Char
+char :: S.IsSource s => Char -> Parser s Char
 char x = sat (== x)
 
-string :: String -> Parser String
+string :: S.IsSource s => String -> Parser s String
 string [] = pure []
 string (x : xs) = do
     _ <- char x
     _ <- string xs
     pure (x : xs)
 
-ident :: Parser String
+ident :: S.IsSource s => Parser s String
 ident = do
     x <- some lower
     xs <- many alphanum
     return (x ++ xs)
 
-nat :: Parser Int
+nat :: S.IsSource s => Parser s Int
 nat = do
     xs <- some digit
     return (read xs)
 
-space :: Parser ()
+space :: S.IsSource s => Parser s ()
 space = do
     _ <- many (sat isSpace)
     return ()
 
-int :: Parser Int
+int :: S.IsSource s => Parser s Int
 int =
     do
         _ <- char '-'
@@ -68,7 +69,7 @@ int =
         return (-n)
         <|> nat
 
-token :: Parser a -> Parser a
+token :: S.IsSource s => Parser s a -> Parser s a
 token p = do
     space
     v <- p

@@ -110,7 +110,11 @@ library
   -- Modules exported by the library.
   exposed-modules:
     MTParser
+    MTParser.ByteStringAsSource
     MTParser.Parser
+    MTParser.Source
+    MTParser.StringAsSource
+    MTParser.TextAsSource
     MTParser.Tools
 
   -- Modules included in this library but not exported.
@@ -148,7 +152,11 @@ test-suite simple-mt-parser-test
   hs-source-dirs:   test
 
   -- The entrypoint to the test suite.
-  main-is:          Main.hs
+  main-is:          Main.hs 
+  other-modules:
+    ByteChar8Test
+    StringTest
+    TextTest
 
   -- Test dependencies.
   build-depends:
