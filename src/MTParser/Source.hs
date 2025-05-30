@@ -26,7 +26,7 @@ instance IsSource C.ByteString where
     head :: (IsSource C.ByteString) => C.ByteString -> Char
     head = fst . fromJust . C.uncons
     tail :: (IsSource C.ByteString) => C.ByteString -> C.ByteString
-    tail = fst . fromJust . C.unsnoc
+    tail = snd . fromJust . C.uncons
     null :: (IsSource C.ByteString) => C.ByteString
     null = C.empty
     isNull :: (IsSource C.ByteString) => C.ByteString -> Bool
@@ -36,7 +36,7 @@ instance IsSource T.Text where
     head :: (IsSource T.Text) => T.Text -> Char
     head = fst . fromJust . T.uncons
     tail :: (IsSource T.Text) => T.Text -> T.Text
-    tail = fst . fromJust . T.unsnoc
+    tail = snd . fromJust . T.uncons
     null :: (IsSource T.Text) => T.Text
     null = T.empty
     isNull :: (IsSource T.Text) => T.Text -> Bool
