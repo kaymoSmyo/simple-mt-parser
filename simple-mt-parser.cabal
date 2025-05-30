@@ -67,7 +67,10 @@ library
   import:           warnings
 
   -- Modules exported by the library.
-  exposed-modules:  MTParser
+  exposed-modules:
+    MTParser
+    MTParser.Parser
+    MTParser.Tools
 
   -- Modules included in this library but not exported.
   -- other-modules:
@@ -107,4 +110,4 @@ test-suite simple-mt-parser-test
   main-is:          Main.hs
 
   -- Test dependencies.
-  build-depends:
+  build-depends:    simple-mt-parser

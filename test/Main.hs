@@ -1,6 +1,7 @@
 module Main (main) where
 
-import MTParser
+import MTParser.Parser ( Parser, ParseError, runParser )
+import MTParser.Tools
 
 main :: IO ()
 main = putStrLn "Test suite not yet implemented."
