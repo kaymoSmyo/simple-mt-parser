@@ -1,6 +1,7 @@
-module MTParser.Tools () where
+module MTParser.Tools where
 
 import Control.Applicative (Alternative (empty, many, some, (<|>)))
+import Control.Monad.Error.Class (MonadError (throwError))
 import Data.Char (
     isAlpha,
     isAlphaNum,
@@ -9,14 +10,14 @@ import Data.Char (
     isSpace,
     isUpper,
  )
-import MTParser.Parser (Parser, item)
+import MTParser.Parser (ParseError (Err), Parser, item)
 
 sat :: (Char -> Bool) -> Parser Char
 sat p = do
     x <- item
     if p x
         then pure x
-        else empty
+        else throwError . Err $ "not predicate at " ++ [x]
 
 digit :: Parser Char
 digit = sat isDigit

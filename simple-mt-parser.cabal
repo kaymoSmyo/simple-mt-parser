@@ -151,4 +151,6 @@ test-suite simple-mt-parser-test
   main-is:          Main.hs
 
   -- Test dependencies.
-  build-depends:    simple-mt-parser
+  build-depends:
+    , HUnit             >=1.6.2 && <1.7
+    , simple-mt-parser
