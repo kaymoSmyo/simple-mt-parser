@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cabal-fmt -i start-haskell.cabal
+cabal-fmt -i simple-mt-parser.cabal
 cabal build
 cabal test
