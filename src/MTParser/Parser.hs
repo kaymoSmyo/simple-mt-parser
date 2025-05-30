@@ -1,9 +1,9 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module MTParser.Parser (runParser, Parser, item, ParseError) where
+module MTParser.Parser (runParser, Parser, item, ParseError (..), mkParseError) where
 
-import Control.Applicative (Alternative (empty, (<|>)))
+import Control.Applicative ( Alternative((<|>), empty) ) 
 import Control.Monad.Except (ExceptT (ExceptT), MonadError (throwError), runExceptT)
 import Control.Monad.State (MonadState (get, put, state), State, runState)
 
@@ -26,14 +26,16 @@ instance Alternative Parser where
             (Left _, _) -> runParser q input
             ok -> ok
     empty :: Parser a
-    empty = throwError $ Err "Empty"
+    empty = throwError $ Err ""
+
+mkParseError :: String -> ParseError
+mkParseError = Err
 
 runParser :: Parser a -> String -> (Either ParseError a, String)
 runParser (P m) = runState (runExceptT m)
 
 item :: Parser Char
 item =
-    get >>= \input ->
-        case input of
-            [] -> throwError $ Err input
-            (x : xs) -> put xs >> pure x
+    get >>= \case
+        [] -> throwError $ Err "Empty Input"
+        (x : xs) -> put xs >> pure x
