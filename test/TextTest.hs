@@ -1,10 +1,8 @@
 --- /dev/null
 module TextTest (textToolTest) where
 
-import qualified Data.Text as T
+import Data.Text qualified as T
 import MTParser.Parser (ParseError (Err), runParser)
-
--- Import specific parsers or all from MTParser.Tools
 import MTParser.Tools (
     alphanum,
     char,

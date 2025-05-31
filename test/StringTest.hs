@@ -17,6 +17,7 @@ import MTParser.Tools (
     token,
     upper,
  )
+
 -- System.Exit and parts of Test.HUnit (Counts, runTestTT) are removed
 -- as Main.hs will handle the overall test execution.
 import Test.HUnit (
@@ -24,6 +25,7 @@ import Test.HUnit (
     (~:),
     (~?=),
  )
+
 stringToolTest :: Test -- Renamed from allTests to be more specific
 stringToolTest =
     TestList
@@ -40,6 +42,7 @@ stringToolTest =
         , intTest
         , tokenTest
         ]
+
 -- Helper for expected results
 success :: (Show a, Eq a) => a -> String -> (Either ParseError a, String)
 success val rest = (Right val, rest)
@@ -211,4 +214,3 @@ tokenTest =
             , "token on empty input with parser that fails on empty (like digit)" ~: runParser (token digit) "" ~?= expectRunParserEmpty ""
             , "token on spaces only with parser that fails on empty (like digit)" ~: runParser (token digit) "   " ~?= expectRunParserEmpty ""
             ]
-

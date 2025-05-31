@@ -3,7 +3,6 @@ module ByteChar8Test (byteStringChar8ToolTest) where
 import Data.ByteString.Char8 qualified as BS
 import MTParser.Parser (ParseError (Err), runParser)
 
--- Import specific parsers or all from MTParser.Tools
 import MTParser.Tools (
     alphanum,
     char,
@@ -23,7 +22,6 @@ import Test.HUnit (
     (~:),
     (~?=),
  )
-import qualified Data.ByteString.Char8 as BS
 
 byteStringChar8ToolTest :: Test
 byteStringChar8ToolTest =
