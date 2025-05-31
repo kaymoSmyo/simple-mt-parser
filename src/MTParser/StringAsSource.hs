@@ -1,2 +1,0 @@
-module MTParser.StringAsSource where
-    
