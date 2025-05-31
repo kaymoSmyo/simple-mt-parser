@@ -110,11 +110,8 @@ library
   -- Modules exported by the library.
   exposed-modules:
     MTParser
-    MTParser.ByteStringAsSource
     MTParser.Parser
     MTParser.Source
-    MTParser.StringAsSource
-    MTParser.TextAsSource
     MTParser.Tools
 
   -- Modules included in this library but not exported.
