@@ -77,12 +77,6 @@ library
   hs-source-dirs:   src
   default-language: GHC2021
 
-executable simple-mt-parser-app
-  import:           warnings
-  build-depends:    simple-mt-parser
-  hs-source-dirs:   app
-  default-language: GHC2021
-  main-is:          Main.hs
 
 test-suite simple-mt-parser-test
   import:           warnings
@@ -98,15 +92,3 @@ test-suite simple-mt-parser-test
   build-depends:
     , HUnit             >=1.6.2 && <1.7
     , simple-mt-parser
-
-benchmark simple-mt-parser-bench
-  import:           warnings
-  type:             exitcode-stdio-1.0
-  main-is:          Bench.hs
-  hs-source-dirs:   bench
-  build-depends:
-    , criterion         >=1.5
-    , simple-mt-parser
-
-  default-language: GHC2021
-  ghc-options:      -threaded -rtsopts -with-rtsopts=-N -O2
