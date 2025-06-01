@@ -1,4 +1,20 @@
-module MTParser () where
+module MTParser (
+    runParser,
+    item,
+    sat,
+    digit,
+    lower,
+    upper,
+    letter,
+    alphanum,
+    char,
+    string,
+    ident,
+    nat,
+    space,
+    int,
+    token,
+) where
 
 import MTParser.Parser
 import MTParser.Tools
