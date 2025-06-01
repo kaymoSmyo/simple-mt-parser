@@ -77,7 +77,6 @@ library
   hs-source-dirs:   src
   default-language: GHC2021
 
-
 test-suite simple-mt-parser-test
   import:           warnings
   default-language: GHC2021
@@ -92,3 +91,10 @@ test-suite simple-mt-parser-test
   build-depends:
     , HUnit             >=1.6.2 && <1.7
     , simple-mt-parser
+
+executable simple-mt-parser-app
+  import:           warnings
+  default-language: GHC2021
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  build-depends:    simple-mt-parser
