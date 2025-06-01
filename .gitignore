@@ -3,4 +3,3 @@ cabal.project.local
 .vscode
 tmp.txt
 bench
-.gitignore
