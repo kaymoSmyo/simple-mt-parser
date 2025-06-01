@@ -59,6 +59,3 @@ token p = spaces *> p <* spaces
 
 anyChar :: (S.IsSource s) => Parser s Char
 anyChar = sat (const True)
-
-many1 :: (S.IsSource s) => Parser s a -> Parser s [a]
-many1 p = (:) <$> p <*> many p

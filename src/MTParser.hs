@@ -15,7 +15,6 @@ module MTParser (
     int,
     token,
     Parser,
-    many1
 ) where
 
 import MTParser.Parser
