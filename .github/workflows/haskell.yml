@@ -17,28 +17,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - uses: haskell-actions/setup@v2.7.11
+      id: setup-haskell # Add id to reference outputs in later steps
       with:
         ghc-version: '9.6.7'
         cabal-version: '3.12.1.0'
 
-    - name: Cache
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-cabal
+    - name: Cache Cabal store and dist-newstyle
+      uses: actions/cache@v4 # Updated to v4
       with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
+        path: |
+          ~/.cabal/store
+          dist-newstyle
+        key: ${{ runner.os }}-ghc-${{ steps.setup-haskell.outputs.ghc-version }}-cabal-${{ steps.setup-haskell.outputs.cabal-version }}-deps-${{ hashFiles('**/cabal.project.freeze', '**/*.cabal', '**/cabal.project') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+          ${{ runner.os }}-ghc-${{ steps.setup-haskell.outputs.ghc-version }}-cabal-${{ steps.setup-haskell.outputs.cabal-version }}-deps-
+          ${{ runner.os }}-ghc-${{ steps.setup-haskell.outputs.ghc-version }}-cabal-${{ steps.setup-haskell.outputs.cabal-version }}-
+          ${{ runner.os }}-ghc-
 
-    - name: Install dependencies
+    - name: Build project (including dependencies) and run tests
       run: |
         cabal update
-        cabal build --only-dependencies --enable-tests --enable-benchmarks
-    - name: Build
-      run: cabal build --enable-tests --enable-benchmarks all
-    - name: Run tests
-      run: cabal test all
+        cabal build --enable-tests --enable-benchmarks all
+        cabal test --enable-tests --enable-benchmarks all
