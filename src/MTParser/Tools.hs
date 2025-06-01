@@ -48,11 +48,14 @@ ident = (++) <$> some lower <*> many alphanum
 nat :: (S.IsSource s) => Parser s Int
 nat = read <$> some digit
 
-space :: (S.IsSource s) => Parser s ()
-space = many (sat isSpace) Data.Functor.$> ()
+spaces :: (S.IsSource s) => Parser s ()
+spaces = many (sat isSpace) Data.Functor.$> ()
 
 int :: (S.IsSource s) => Parser s Int
 int = (negate <$> (char '-' *> nat)) <|> nat
 
 token :: (S.IsSource s) => Parser s a -> Parser s a
-token p = space *> p <* space
+token p = spaces *> p <* spaces
+
+anyChar :: (S.IsSource s) => Parser s Char
+anyChar = sat (const True)

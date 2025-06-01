@@ -1,9 +1,7 @@
 module ByteChar8Test (byteStringChar8ToolTest) where
 
 import Data.ByteString.Char8 qualified as BS
-import MTParser.Parser (ParseError (Err), runParser)
-
-import MTParser.Tools (
+import MTParser (
     alphanum,
     char,
     digit,
@@ -12,11 +10,13 @@ import MTParser.Tools (
     letter,
     lower,
     nat,
-    space,
+    runParser,
+    spaces,
     string,
     token,
     upper,
  )
+import MTParser.Parser (ParseError (Err))
 import Test.HUnit (
     Test (TestList),
     (~:),
@@ -172,10 +172,10 @@ spaceTest :: Test
 spaceTest =
     "space (ByteString)"
         ~: TestList
-            [ "consume multiple spaces '   '" ~: runParser space (BS.pack "   ") ~?= success () (BS.pack "")
-            , "consume spaces before text '   abc'" ~: runParser space (BS.pack "   abc") ~?= success () (BS.pack "abc")
-            , "consume no spaces if none present 'abc'" ~: runParser space (BS.pack "abc") ~?= success () (BS.pack "abc")
-            , "consume no spaces on empty input ''" ~: runParser space (BS.pack "") ~?= success () (BS.pack "")
+            [ "consume multiple spaces '   '" ~: runParser spaces (BS.pack "   ") ~?= success () (BS.pack "")
+            , "consume spaces before text '   abc'" ~: runParser spaces (BS.pack "   abc") ~?= success () (BS.pack "abc")
+            , "consume no spaces if none present 'abc'" ~: runParser spaces (BS.pack "abc") ~?= success () (BS.pack "abc")
+            , "consume no spaces on empty input ''" ~: runParser spaces (BS.pack "") ~?= success () (BS.pack "")
             ]
 
 intTest :: Test

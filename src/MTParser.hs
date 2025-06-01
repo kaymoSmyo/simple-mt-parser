@@ -11,7 +11,7 @@ module MTParser (
     string,
     ident,
     nat,
-    space,
+    spaces,
     int,
     token,
 ) where

@@ -1,8 +1,7 @@
 module TextTest (textToolTest) where
 
 import Data.Text qualified as T
-import MTParser.Parser (ParseError (Err), runParser)
-import MTParser.Tools (
+import MTParser (
     alphanum,
     char,
     digit,
@@ -11,11 +10,13 @@ import MTParser.Tools (
     letter,
     lower,
     nat,
-    space,
+    runParser,
+    spaces,
     string,
     token,
     upper,
  )
+import MTParser.Parser (ParseError (Err))
 import Test.HUnit (
     Test (TestList),
     (~:),
@@ -171,10 +172,10 @@ spaceTest :: Test
 spaceTest =
     "space (Text)"
         ~: TestList
-            [ "consume multiple spaces '   '" ~: runParser space (T.pack "   ") ~?= success () (T.pack "")
-            , "consume spaces before text '   abc'" ~: runParser space (T.pack "   abc") ~?= success () (T.pack "abc")
-            , "consume no spaces if none present 'abc'" ~: runParser space (T.pack "abc") ~?= success () (T.pack "abc")
-            , "consume no spaces on empty input ''" ~: runParser space (T.pack "") ~?= success () (T.pack "")
+            [ "consume multiple spaces '   '" ~: runParser spaces (T.pack "   ") ~?= success () (T.pack "")
+            , "consume spaces before text '   abc'" ~: runParser spaces (T.pack "   abc") ~?= success () (T.pack "abc")
+            , "consume no spaces if none present 'abc'" ~: runParser spaces (T.pack "abc") ~?= success () (T.pack "abc")
+            , "consume no spaces on empty input ''" ~: runParser spaces (T.pack "") ~?= success () (T.pack "")
             ]
 
 intTest :: Test

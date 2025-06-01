@@ -1,9 +1,6 @@
 module StringTest (stringToolTest) where
 
-import MTParser.Parser (ParseError (Err), runParser)
-
--- Import specific parsers or all from MTParser.Tools
-import MTParser.Tools (
+import MTParser (
     alphanum,
     char,
     digit,
@@ -12,14 +9,14 @@ import MTParser.Tools (
     letter,
     lower,
     nat,
-    space,
+    runParser,
+    spaces,
     string,
     token,
     upper,
  )
+import MTParser.Parser (ParseError (Err))
 
--- System.Exit and parts of Test.HUnit (Counts, runTestTT) are removed
--- as Main.hs will handle the overall test execution.
 import Test.HUnit (
     Test (TestList),
     (~:),
@@ -174,10 +171,10 @@ spaceTest :: Test
 spaceTest =
     "space"
         ~: TestList
-            [ "consume multiple spaces '   '" ~: runParser space "   " ~?= success () ""
-            , "consume spaces before text '   abc'" ~: runParser space "   abc" ~?= success () "abc"
-            , "consume no spaces if none present 'abc'" ~: runParser space "abc" ~?= success () "abc"
-            , "consume no spaces on empty input ''" ~: runParser space "" ~?= success () ""
+            [ "consume multiple spaces '   '" ~: runParser spaces "   " ~?= success () ""
+            , "consume spaces before text '   abc'" ~: runParser spaces "   abc" ~?= success () "abc"
+            , "consume no spaces if none present 'abc'" ~: runParser spaces "abc" ~?= success () "abc"
+            , "consume no spaces on empty input ''" ~: runParser spaces "" ~?= success () ""
             ]
 
 intTest :: Test
