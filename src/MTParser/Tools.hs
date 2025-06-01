@@ -10,6 +10,7 @@ import Data.Char (
     isSpace,
     isUpper,
  )
+import Data.Functor (($>))
 import MTParser.Parser (ParseError (Err), Parser, item)
 import MTParser.Source qualified as S
 
@@ -39,39 +40,19 @@ char :: (S.IsSource s) => Char -> Parser s Char
 char x = sat (== x)
 
 string :: (S.IsSource s) => String -> Parser s String
-string [] = pure []
-string (x : xs) = do
-    _ <- char x
-    _ <- string xs
-    pure (x : xs)
+string = foldr (\c -> (<*>) ((:) <$> char c)) (pure "")
 
 ident :: (S.IsSource s) => Parser s String
-ident = do
-    x <- some lower
-    xs <- many alphanum
-    return (x ++ xs)
+ident = (++) <$> some lower <*> many alphanum
 
 nat :: (S.IsSource s) => Parser s Int
-nat = do
-    xs <- some digit
-    return (read xs)
+nat = read <$> some digit
 
 space :: (S.IsSource s) => Parser s ()
-space = do
-    _ <- many (sat isSpace)
-    return ()
+space = many (sat isSpace) Data.Functor.$> ()
 
 int :: (S.IsSource s) => Parser s Int
-int =
-    do
-        _ <- char '-'
-        n <- nat
-        return (-n)
-        <|> nat
+int = (negate <$> (char '-' *> nat)) <|> nat
 
 token :: (S.IsSource s) => Parser s a -> Parser s a
-token p = do
-    space
-    v <- p
-    space
-    return v
+token p = space *> p <* space
