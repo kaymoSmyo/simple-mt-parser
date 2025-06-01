@@ -1,4 +1,3 @@
---- /dev/null
 module TextTest (textToolTest) where
 
 import Data.Text qualified as T
